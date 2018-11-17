@@ -20,6 +20,10 @@
                                 <li><label>10 asistentes confirmados</label></li>
                                 <li><label>5 asistentes sin confirmar</label></li>
                             </ul>
+                            <div id="liveclck">
+                                <p class="date">{{ date }}</p>
+                                <p class="pakatime">{{ pakatime }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -83,6 +87,42 @@ export default {
             data : data,
             options: pieOptions
         });
-    }    
+        var liveclck = new Vue({
+            el: '#liveclck',
+            data: {
+                pakatime: '',
+                date: ''
+            }
+        });
+        var custom_date = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
+        var timerID = setInterval(activeUpdateDateTime, 1000);
+        activeUpdateDateTime();
+        function activeUpdateDateTime() { 
+            var mycurrentDate = new Date();
+            liveclck.pakatime = sysPaddingZro(mycurrentDate.getHours(), 2) + ':' +sysPaddingZro(mycurrentDate.getMinutes(), 2) + ':' + sysPaddingZro(mycurrentDate.getSeconds(), 2);
+            liveclck.date = sysPaddingZro(mycurrentDate.getFullYear(), 4) + '-' + sysPaddingZro(mycurrentDate.getMonth()+1, 2) + '-' + sysPaddingZro(mycurrentDate.getDate(), 2) + ' ' + custom_date[mycurrentDate.getDay];
+        };
+        function sysPaddingZro(lnum, mydgt){
+            var clckzro = '';
+            for(var i = 0; i < mydgt; i++){
+                clckzro += '0';
+            }
+            return (clckzro + lnum).slice(-mydgt);
+        }
+    }
+    /*computed: {
+        ShowTime: function(){
+            var date = new Date();
+            var h = date.getHours(); // 0 -23
+            var m = date.getMinutes(); // 0 - 59
+            var s = date.getSeconds(); // 0 - 59
+
+            var time = h + ":" + m + ":" + s;
+
+        }.then(function (ShowTime){
+            document.getElementById("MyClock").innerText = time;
+            document.getElementById("MyClock").textContent = time;
+        })
+    }*/
 }
 </script>

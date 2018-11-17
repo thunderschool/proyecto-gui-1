@@ -324,7 +324,7 @@
                 }).catch(function (error){
                     console.log(error);
                 })
-            },
+            }, //Singleton ya solo requerimos de una instancia para abrir nuestro modal
             openModal(model, action, data = []){
                 switch(model){
                     case 'category': {
